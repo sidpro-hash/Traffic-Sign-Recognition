@@ -111,7 +111,7 @@ def upload_images():
         in_image.save(os.path.join('uploads', secure_filename(f"{filename}.{in_image.filename.split('.')[-1]}")))
         if os.path.exists(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}")):
             output = get_output(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}"))
-        else:
+        	os.remove(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}"))
             flash(f'Please upload image first!', 'danger')
             return render_template("index.html")
         # print(output)
