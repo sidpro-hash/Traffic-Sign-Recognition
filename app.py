@@ -83,28 +83,6 @@ def get_output(image_path):
 @app.route("/", methods = ["GET", "POST"])
 def home():
     if request.method == "POST":
-        upload_images()
-        if request.form.get("name"):
-            name = request.form.get("name")
-            mail = request.form.get("email")
-            sub = request.form.get("subject")
-            mes = request.form.get("message")
-            mes_new = f"Hello Sir,\n{name} wants to convey you message about {sub}, message is below\n{mes}\n\nSent by\n{name}\nmail : {mail}"
-            msg = Message(sub, sender = app.config["MAIL_USERNAME"], recipients = ['smitpanchal42@gmail.com'])
-            msg.body = mes_new
-            try:
-                mail_send.send(msg)
-                flash("Message has been sent to Admin", "success")
-                return redirect(url_for("home"))
-            except:
-                flash("Send again", "danger")
-                return redirect(url_for("home"))
-
-    return render_template('index.html')
-
-
-def upload_images():
-    if request.files:
         # print("Entered")
         in_image = request.files["in_image"]
         filename = str(uuid.uuid4()) + '_' + str(strftime("%Y_%m_%d-%H_%M_%S", gmtime()))
@@ -123,6 +101,7 @@ def upload_images():
             return render_template("index.html")
         # print(output)
     return render_template('index.html')
+
 
 if __name__ =="__main__":
     app.run(debug=True)
