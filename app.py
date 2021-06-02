@@ -75,23 +75,27 @@ def get_output(image_path):
 @app.route("/", methods = ["GET", "POST"])
 def home():
     if request.method == "POST":
-        # print("Entered")
+        
+        output = "NO"
         in_image = request.files["in_image"]
         filename = str(uuid.uuid4()) + '_' + str(strftime("%Y_%m_%d-%H_%M_%S", gmtime()))
-        in_image.save(os.path.join('uploads', secure_filename(f"{filename}.{in_image.filename.split('.')[-1]}")))
-        if os.path.exists(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}")):
-            output = get_output(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}"))
-#             os.remove(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}"))
-            
-            if output!= "NO":
-                flash(f'This is sign of {output.capitalize()}!', 'success')
+#             print(filename)
+#             print(in_image.filename.split('.')[-1])
+        filename = filename +"."+in_image.filename.split('.')[-1]
+        in_image.save(os.path.join('uploads/', secure_filename(filename)))
+        if os.path.exists(os.path.join('uploads/',filename)):
+            output = get_output(os.path.join('uploads/', filename))
+#                 print("This is output")
+#                 print(output)
+            if output=="NO":
+                flash(f'Please upload image first!', 'danger')
                 return render_template("index.html")
-            else:
-                return render_template("index.html")
-        else:
-            flash(f'Please upload image first!', 'danger')
+            # print(output)
+        if output!="NO":
+            flash(f'This is sign of {output.capitalize()}!', 'success')
             return render_template("index.html")
-        # print(output)
+    else:
+        return render_template("index.html")
     return render_template('index.html')
 
 
