@@ -81,9 +81,9 @@ def home():
         in_image.save(os.path.join('uploads', secure_filename(f"{filename}.{in_image.filename.split('.')[-1]}")))
         if os.path.exists(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}")):
             output = get_output(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}"))
-            os.remove(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}"))
+#             os.remove(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}"))
             
-            if output:
+            if output!= "NO":
                 flash(f'This is sign of {output.capitalize()}!', 'success')
                 return render_template("index.html")
             else:
