@@ -1,7 +1,7 @@
 from flask import Flask, url_for, render_template, request, flash
 # from flask.globals import request
 from flask_cors import CORS, cross_origin
-import pandas as pd
+# import pandas as pd
 import numpy as np
 import tensorflow as tf
 from werkzeug.utils import redirect, secure_filename
@@ -9,7 +9,7 @@ import os
 import uuid
 from time import gmtime, strftime
 from flask_mail import Mail, Message
-import time
+# import time
 
 
 app = Flask(__name__)
@@ -111,13 +111,14 @@ def upload_images():
         in_image.save(os.path.join('uploads', secure_filename(f"{filename}.{in_image.filename.split('.')[-1]}")))
         if os.path.exists(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}")):
             output = get_output(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}"))
-        	os.remove(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}"))
+            os.remove(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}"))
+        else:
             flash(f'Please upload image first!', 'danger')
             return render_template("index.html")
         # print(output)
-        if output:
-            flash(f'This is sign of {output.capitalize()}!', 'success')
-            return render_template("index.html")
+    if output:
+        flash(f'This is sign of {output.capitalize()}!', 'success')
+        return render_template("index.html")
     else:
         return render_template("index.html")
     return render_template('index.html')
