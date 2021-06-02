@@ -8,9 +8,8 @@
   <title>Image Classifier</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename = 'favicon.ico') }}">
+	<link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename = 'favicon.ico') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename = 'favicon.ico') }}">
-
   <!-- Favicons
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon"> -->
@@ -27,11 +26,11 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
  -->
-  <link type = "text/css" href="{{ url_for('static', filename = '/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-  <link type = "text/css" href="{{ url_for('static', filename = '/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
-  <link type = "text/css" href="{{ url_for('static', filename = '/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
-  <link type = "text/css" href="{{ url_for('static', filename = '/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
-  <link type = "text/css" href="{{ url_for('static', filename = '/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link type = "text/css" href="{{ url_for('static', filename = 'vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link type = "text/css" href="{{ url_for('static', filename = 'vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+  <link type = "text/css" href="{{ url_for('static', filename = 'vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+  <link type = "text/css" href="{{ url_for('static', filename = 'vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+  <link type = "text/css" href="{{ url_for('static', filename = 'vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="{{ url_for('static', filename = 'css/style.css') }}" rel="stylesheet">
@@ -564,7 +563,7 @@
 
         <div class="row">
 
-          <div>
+          <div class="col-lg-6">
 
             <div class="row">
               <div class="col-md-12">
@@ -597,7 +596,7 @@
 
           </div>
 
-<!--           <div class="col-lg-6">
+          <div class="col-lg-6">
 
             <form action="{{ url_for('home') }}" method="POST" role="form" style="border: 2px solid black; padding: 12px; margin: 12px;"> 
               <div class="row">
@@ -619,10 +618,10 @@
                 <div class="sent-message"></div>
                 <div class="error-message"></div>
               </div> -->
-<!--               <br>
+              <br>
               <div class="text-center"><button type="submit" style="position: relative; overflow: hidden; background-color: #ffb727;">Send Message</button></div>
             </form>
-          </div>  -->
+          </div>
         </div>
 
       </div>

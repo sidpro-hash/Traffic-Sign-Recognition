@@ -1,7 +1,7 @@
 from flask import Flask, url_for, render_template, request, flash
 # from flask.globals import request
 from flask_cors import CORS, cross_origin
-# import pandas as pd
+import pandas as pd
 import numpy as np
 import tensorflow as tf
 from werkzeug.utils import redirect, secure_filename
@@ -9,13 +9,21 @@ import os
 import uuid
 from time import gmtime, strftime
 from flask_mail import Mail, Message
-# import time
+import time
 
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['SECRET_KEY'] = 'sjbcxzsdc15xz6czc'
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'botofsmitpanchal@gmail.com'
+app.config['MAIL_PASSWORD'] = 'botofsmitpanchal123'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail_send = Mail(app)
+
 
 model = tf.keras.models.load_model('./models/model_best_final.h5')
 classes = { 
@@ -75,18 +83,39 @@ def get_output(image_path):
 @app.route("/", methods = ["GET", "POST"])
 def home():
     if request.method == "POST":
+        upload_images()
+        if request.form.get("name"):
+            name = request.form.get("name")
+            mail = request.form.get("email")
+            sub = request.form.get("subject")
+            mes = request.form.get("message")
+            mes_new = f"Hello Sir,\n{name} wants to convey you message about {sub}, message is below\n{mes}\n\nSent by\n{name}\nmail : {mail}"
+            msg = Message(sub, sender = app.config["MAIL_USERNAME"], recipients = ['smitpanchal42@gmail.com'])
+            msg.body = mes_new
+            try:
+                mail_send.send(msg)
+                flash("Message has been sent to Admin", "success")
+                return redirect(url_for("home"))
+            except:
+                flash("Send again", "danger")
+                return redirect(url_for("home"))
+
+    return render_template('index.html')
+
+def upload_images():
+    if request.files:
         
         output = "NO"
         in_image = request.files["in_image"]
         filename = str(uuid.uuid4()) + '_' + str(strftime("%Y_%m_%d-%H_%M_%S", gmtime()))
-#             print(filename)
-#             print(in_image.filename.split('.')[-1])
+        print(filename)
+        print(in_image.filename.split('.')[-1])
         filename = filename +"."+in_image.filename.split('.')[-1]
         in_image.save(os.path.join('uploads/', secure_filename(filename)))
         if os.path.exists(os.path.join('uploads/',filename)):
             output = get_output(os.path.join('uploads/', filename))
-#                 print("This is output")
-#                 print(output)
+            print("This is output")
+            print(output)
             if output=="NO":
                 flash(f'Please upload image first!', 'danger')
                 return render_template("index.html")
@@ -97,7 +126,6 @@ def home():
     else:
         return render_template("index.html")
     return render_template('index.html')
-
 
 if __name__ =="__main__":
     app.run(debug=True)
