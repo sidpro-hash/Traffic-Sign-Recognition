@@ -112,15 +112,16 @@ def upload_images():
         if os.path.exists(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}")):
             output = get_output(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}"))
             os.remove(os.path.join('uploads', f"{filename}.{in_image.filename.split('.')[-1]}"))
+            
+            if output:
+                flash(f'This is sign of {output.capitalize()}!', 'success')
+                return render_template("index.html")
+            else:
+                return render_template("index.html")
         else:
             flash(f'Please upload image first!', 'danger')
             return render_template("index.html")
         # print(output)
-    if output:
-        flash(f'This is sign of {output.capitalize()}!', 'success')
-        return render_template("index.html")
-    else:
-        return render_template("index.html")
     return render_template('index.html')
 
 if __name__ =="__main__":
