@@ -16,14 +16,6 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['SECRET_KEY'] = 'sjbcxzsdc15xz6czc'
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'botofsmitpanchal@gmail.com'
-app.config['MAIL_PASSWORD'] = 'botofsmitpanchal123'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-mail_send = Mail(app)
-
 
 model = tf.keras.models.load_model('./models/model_best_final.h5')
 classes = { 
